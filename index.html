@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Campus Interview Cracker - Prepare for interviews with mock tests, aptitude tests, and a resume builder.">
+    <meta name="keywords" content="Campus Interview, Mock Test, Aptitude Test, Resume Builder, Job Preparation">
+    <meta name="author" content="Jaisree Ragavi">
+    
+    <title>Campus Interview Cracker</title>
+    
+    <!-- Link to External CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+
+    <style>
+        /* General Styles */
+        body {
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 10rem;
+            padding : 5rem;
+        }
+        
+        /* Header */
+        header {
+    padding: 1rem 5%;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+        
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+        
+        .profile-button {
+            font-size: 24px;  /* Adjusted size for profile emoticon */
+            text-decoration: none;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+        
+        
+        /* Container */
+        .container {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        /* Company Section */
+        .company-section {
+            margin-top: 30px;
+        }
+        
+        .company-category {
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #121213;
+        }
+        
+        .companies {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .company {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 250px;
+        }
+        
+        .company img {
+            max-width: 100px;
+            margin-bottom: 10px;
+        }
+        
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .companies {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">Campus Interview Cracker</div>
+        <nav>
+            <a href="profile.html" class="profile-button"><img src="images/profile.png" width="50" height="50" alt="Profile"></a>
+            <a href="auth.html"><img src="images/logout.png" width="50" height="50" alt="Logout"></a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Welcome to Campus Interview Cracker</h1>
+        
+        <!-- Company Section -->
+        <div class="company-section">
+            
+            <!-- Product-based Companies -->
+            <div class="company-category">
+                <h2>Product-Based Companies</h2>
+                <div class="companies">
+                    <div class="company">
+                        <br>
+                        <br>
+                        <br>
+                        <img src="images/company1.png" alt="Company 1">
+                        <br><br>
+                        <br>
+                        <button onclick="navigateTo('Mock Interview/mock-interview-company1.html')">Mock Interview</button>
+                        <button onclick="navigateTo('Aptitude Test/aptitude-test-company1.html')">Aptitude Test</button>
+                        <button onclick="navigateTo('Resume Builder/resume-builder-company1.html')">Resume Builder</button>
+                    </div>
+                    <div class="company">
+                        <br>
+                        <img src="images/company2.png" alt="Company 2">
+                        <button onclick="navigateTo('Mock Interview/mock-interview-company2.html')">Mock Interview</button>
+                        <button onclick="navigateTo('Aptitude Test/aptitude-test-company2.html')">Aptitude Test</button>
+                        <button onclick="navigateTo('Resume Builder/resume-builder-company2.html')">Resume Builder</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service-based Companies -->
+            <div class="company-category">
+                <h2>Service-Based Companies</h2>
+                <div class="companies">
+                    <div class="company">
+                        <img src="images/company3.png" alt="Company 3">
+                        
+                        <button onclick="navigateTo('Mock Interview/mock-interview-company3.html')">Mock Interview</button>
+                        <button onclick="navigateTo('Aptitude Test/aptitude-test-company3.html')">Aptitude Test</button>
+                        <button onclick="navigateTo('Resume Builder/resume-builder-company3.html')">Resume Builder</button>
+                    </div>
+                    <div class="company">
+                        <br>
+                        <img src="images/company4.png" alt="Company 4">
+                        <br>
+                        <br>
+                        <button onclick="navigateTo('Mock Interview/mock-interview-company4.html')">Mock Interview</button>
+                        <button onclick="navigateTo('Aptitude Test/aptitude-test-company4.html')">Aptitude Test</button>
+                        <button onclick="navigateTo('Resume Builder/resume-builder-company4.html')">Resume Builder</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    <script>
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+    </script>
+</body>
+</html>

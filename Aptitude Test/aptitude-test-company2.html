@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Quiz</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"></script>
+    <style>
+        body {
+    background-image:url("picture.jpg");
+    background-repeat: no-repeat;
+    background-size:2000px 2000px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: #fffdfd;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 114, 255, 0.8); /* blue glow effect */
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+    margin: 20px;
+    box-sizing: border-box;
+    transition: box-shadow 0.3s ease-in-out; /* smooth transition */
+}
+
+.container:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 25px 10px rgb(9, 116, 248); /* stronger glow on hover */
+}
+        #timer {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+        #score-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        #progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        #progress-fill {
+            height: 100%;
+            background-color: #007bff;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        #answers-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        #answers-container button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #answers-container button:hover {
+            background-color: #0056b3;
+        }
+        .correct {
+            background-color: #28a745 !important;
+        }
+        .incorrect {
+            background-color: #dc3545 !important;
+        }
+        #final-score {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            display: none;
+        }
+        #restart-btn {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        #restart-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Amazon Quiz</h1>
+        <div id="timer">15:00</div>
+        <div id="progress-bar"><div id="progress-fill"></div></div>
+        <div id="score-display">Score: 0/10</div>
+        <div id="aptitude-question-container">
+            <p id="aptitude-question">Loading question...</p>
+            <div id="answers-container">
+                <button onclick="selectAnswer(0)">A</button>
+                <button onclick="selectAnswer(1)">B</button>
+                <button onclick="selectAnswer(2)">C</button>
+                <button onclick="selectAnswer(3)">D</button>
+            </div>
+            <button id="next-btn" style="display: none;" onclick="nextQuestion()">Next</button>
+        </div>
+        <div id="final-score"></div>
+        <button id="restart-btn" onclick="restartQuiz()">Start New Test</button>
+    </div>
+
+    <script>
+        let questions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerInterval;
+        let timeLeft = 15 * 60;
+        const totalQuestions = 10;
+
+        // Open Trivia DB API URL (Fetching CSE-related questions)
+        const API_URL = "https://opentdb.com/api.php?amount=10&category=18&difficulty=easy&type=multiple";
+
+        async function fetchQuestions() {
+            try {
+                const response = await axios.get(API_URL);
+                questions = response.data.results.map((q) => ({
+                    question: q.question,
+                    options: [...q.incorrect_answers, q.correct_answer].sort(() => Math.random() - 0.5),
+                    correctAnswer: q.correct_answer
+                }));
+                currentQuestionIndex = 0;
+                showQuestion();
+            } catch (error) {
+                console.error("Error fetching questions:", error);
+                document.getElementById('aptitude-question').textContent = 'Error loading questions!';
+            }
+        }
+
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                showFinalScore();
+            } else {
+                timeLeft--;
+            }
+        }
+
+        function showQuestion() {
+            const questionData = questions[currentQuestionIndex];
+            document.getElementById('aptitude-question').innerHTML = questionData.question;
+            
+            const buttons = document.querySelectorAll("#answers-container button");
+            questionData.options.forEach((option, index) => {
+                buttons[index].textContent = option;
+                buttons[index].className = '';
+                buttons[index].disabled = false;
+            });
+
+            document.getElementById('next-btn').style.display = 'none';
+        }
+
+        function selectAnswer(index) {
+            const questionData = questions[currentQuestionIndex];
+            const buttons = document.querySelectorAll("#answers-container button");
+            buttons.forEach(button => button.disabled = true);
+            
+            const selectedOption = buttons[index].textContent;
+            if (selectedOption === questionData.correctAnswer) {
+                score++;
+                buttons[index].classList.add('correct');
+            } else {
+                buttons[index].classList.add('incorrect');
+                buttons[questionData.options.indexOf(questionData.correctAnswer)].classList.add('correct');
+            }
+
+            document.getElementById('score-display').textContent = `Score: ${score}/${totalQuestions}`;
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex >= totalQuestions || timeLeft <= 0) {
+                showFinalScore();
+            } else {
+                showQuestion();
+            }
+        }
+
+        function showFinalScore() {
+            clearInterval(timerInterval);
+            document.getElementById('aptitude-question-container').style.display = 'none';
+            document.getElementById('final-score').textContent = `Final Score: ${score}/${totalQuestions}`;
+            document.getElementById('final-score').style.display = 'block';
+            document.getElementById('restart-btn').style.display = 'block';
+        }
+
+        function restartQuiz() {
+            score = 0;
+            timeLeft = 15 * 60;
+            document.getElementById('score-display').textContent = `Score: 0/${totalQuestions}`;
+            document.getElementById('aptitude-question-container').style.display = 'block';
+            document.getElementById('final-score').style.display = 'none';
+            document.getElementById('restart-btn').style.display = 'none';
+            clearInterval(timerInterval);
+            timerInterval = setInterval(updateTimer, 1000);
+            fetchQuestions();
+        }
+
+        timerInterval = setInterval(updateTimer, 1000);
+        fetchQuestions();
+    </script>
+</body>
+</html>

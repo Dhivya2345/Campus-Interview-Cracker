@@ -1,0 +1,219 @@
+/* General Styles */
+body {
+    background-image:url("picture.jpg");
+    background-repeat: no-repeat;
+    background-size:2000px 2000px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: #fffdfd;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 114, 255, 0.8); /* blue glow effect */
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+    margin: 20px;
+    box-sizing: border-box;
+    transition: box-shadow 0.3s ease-in-out; /* smooth transition */
+}
+
+.container:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 25px 10px rgb(9, 116, 248); /* stronger glow on hover */
+}
+
+
+/* Headings */
+h1 {
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+/* Forms */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+label {
+    margin-top: 10px;
+    font-size: 16px;
+    align-items: baseline;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #c5bfbf;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+textarea {
+    resize: vertical;
+    height: 150px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+    background-color: #ffffff;
+}
+
+textarea::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+/* Buttons */
+button, #submit-btn {
+    margin-top: 20px;
+    padding: 12px 16px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+}
+
+button:hover, #submit-btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+button:active, #submit-btn:active {
+    background-color: #14195e;
+    transform: translateY(0);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:focus, #submit-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(40, 49, 167, 0.3);
+}
+
+/* Feedback */
+#feedback {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+#feedback.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#feedback.success {
+    color: #28a745;
+    background-color: #e8f5e9;
+    border-color: #c3e6cb;
+}
+
+#feedback.error {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+#feedback.info {
+    color: #17a2b8;
+    background-color: #e2f3f7;
+    border-color: #b8e2f0;
+}
+
+/* Mock Interview Page */
+#question-container {
+    margin-top: 100px;
+}
+
+#question {
+    font-size: 18px;
+    margin: 5rem auto;
+    padding: 3rem;
+    max-width: 800px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    line-height: 1.6;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+    border: 1px solid #e0e0e0;
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+
+    input, textarea {
+        font-size: 12px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    label {
+        font-size: 12px;
+    }
+
+    input, textarea {
+        font-size: 12px;
+    }
+
+    button {
+        font-size: 12px;
+        padding: 10px;
+    }
+}
+

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 10rem;
+            padding-top: 40rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+            text-align: left; /* Align labels to the left */
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #resume-feedback {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Resume Builder</h1>
+        <form id="resume-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" required><br>
+
+            <label for="career-objective">Career Objective:</label>
+            <textarea id="career-objective" required></textarea><br>
+
+            <label for="education">Education:</label>
+            <textarea id="education" required></textarea><br>
+
+            <label for="certifications">Certifications:</label>
+            <textarea id="certifications"></textarea><br>
+
+            <label for="skills">Skillsets:</label>
+            <textarea id="skills"></textarea><br>
+
+            <label for="areas-of-interest">Areas of Interest:</label>
+            <textarea id="areas-of-interest"></textarea><br>
+
+            <label for="projects">Projects:</label>
+            <textarea id="projects"></textarea><br>
+
+            <label for="workshops-conferences">Workshops and Conferences:</label>
+            <textarea id="workshops-conferences"></textarea><br>
+
+            <button type="submit">Generate Resume</button>
+        </form>
+        <p id="resume-feedback"></p>
+    </div>
+
+    <script>
+        document.getElementById('resume-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            console.log("Form submitted");
+
+            // Collecting all user inputs
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const careerObjective = document.getElementById('career-objective').value;
+            const education = document.getElementById('education').value;
+            const certifications = document.getElementById('certifications').value;
+            const skills = document.getElementById('skills').value;
+            const areasOfInterest = document.getElementById('areas-of-interest').value;
+            const projects = document.getElementById('projects').value;
+            const workshopsConferences = document.getElementById('workshops-conferences').value;
+
+            // Log form values for debugging
+            console.log({
+                name,
+                email,
+                careerObjective,
+                education,
+                certifications,
+                skills,
+                areasOfInterest,
+                projects,
+                workshopsConferences
+            });
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Header
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(24);
+            doc.text(20, 20, name);
+            
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(14);
+            doc.text(20, 30, email);
+
+            // Career Objective
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(16);
+            doc.text(20, 50, 'Career Objective:');
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(12);
+            doc.text(20, 60, careerObjective);
+
+            // Education
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(16);
+            doc.text(20, 80, 'Education:');
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(12);
+            doc.text(20, 90, education);
+
+            // Certifications
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(16);
+            doc.text(20, 110, 'Certifications:');
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(12);
+            doc.text(20, 120, certifications);
+
+            // Skills
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(16);
+            doc.text(20, 140, 'Skills:');
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(12);
+            doc.text(20, 150, skills);
+
+            // Areas of Interest
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(16);
+            doc.text(20, 170, 'Areas of Interest:');
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(12);
+            doc.text(20, 180, areasOfInterest);
+
+            // Projects
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(16);
+            doc.text(20, 200, 'Projects:');
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(12);
+            doc.text(20, 210, projects);
+
+            // Workshops and Conferences
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(16);
+            doc.text(20, 230, 'Workshops and Conferences:');
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(12);
+            doc.text(20, 240, workshopsConferences);
+
+            // Save the PDF
+            doc.save(`${name}-resume.pdf`);
+
+            // Provide feedback to the user
+            document.getElementById('resume-feedback').textContent = 'Your resume has been generated and downloaded!';
+        });
+    </script>
+</body>
+</html>
